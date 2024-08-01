@@ -1,6 +1,5 @@
 const int SENSOR_PIN = 2;
 const int LED_PIN = 13;
-volatile bool motion_Detection = false;
 
 void setup() {
   pinMode(SENSOR_PIN, INPUT);
@@ -12,22 +11,16 @@ void setup() {
 }
 
 void loop() {
-  if (motion_Detection) {
-    Serial.println("Motion Detected");
-    digitalWrite(LED_PIN, HIGH);
-  } else {
-    Serial.println("No Motion Detected");
-    digitalWrite(LED_PIN, LOW);
-  }
-  delay(500);
 }
 
 //Interrupt Service Routine for the Motion Sensor
 void motionISR() {
   int motionStatus = digitalRead(SENSOR_PIN);
   if (motionStatus == HIGH) {
-    motion_Detection = true;
+    Serial.println("Motion Detected");
+    digitalWrite(LED_PIN, HIGH);
   } else {
-    motion_Detection = false;
+    Serial.println("No Motion Detected");
+    digitalWrite(LED_PIN, LOW);
   }
 }
